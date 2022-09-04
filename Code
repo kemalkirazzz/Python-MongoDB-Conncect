@@ -1,0 +1,74 @@
+!pip3 install pymongo[srv]
+
+# MongoDB Kütüphanesine Bağlanma
+
+from pymongo import MongoClient
+
+client = MongoClient("MONGO URI")
+
+print(client.list_database_names())
+
+dblist = client.list_database_names()
+dbByuser=input("Veritabanı Adını giriniz")
+if dbByuser in dblist:
+   print("Veri tabanı var")
+else:
+  print("Maalesef veri tabanı bulunamadı. Tekrar deneyin")
+  
+ dbname = client['recommendation']
+ 
+ print(dbname.list_collection_names())
+ 
+ #Collection'da bulunan verileri getirme...
+ 
+ collectionName = dbname['recommendations']
+ 
+ mydata = collectionName.find({})
+ 
+ for i in mydata:
+  print(i)
+  
+  #Collection'da bulunan ve istenen verileri getirme.
+  myData2 = collectionName.find( {"bedrooms":5} , {"bedrooms":1 , "beds":1 ,"_id":0} )
+  for j in myData2:
+  print(j)
+  
+  
+  
+  
+  item1 = {
+    "name":"Kemal",
+    "surname":"Kiraz",
+    "age":21
+}
+studentCol = dbname['students']
+studentCol.insert_one(item1)
+
+myStudentData = Col.find()
+for i in myStudentData:
+  print(i)
+  
+  dbname = client['DB']
+Colname = dbname['Col']
+item1 = {
+    "name":"Kemal",
+    "surname":"Kiraz",
+    "age":22,
+    "city":"İstanbul"
+}
+Col.insert_one(item1) #DB ve Col yoksa oluştur varsa olana kaydet
+
+company = client['DB']
+employees = company['Employees']
+myEmployeList = [
+    {"name":"ahmet","surname":"Doğan"},
+    {"name":"Mert","surname":"Yılmaz"},
+    {"name":"Ali","surname":"Karakaş"}
+]
+employees.insert_many(myEmployeList)
+  
+myStudentData = employees.find()
+for i in myStudentData:
+  print(i)
+
+Col.delete_one(item1)
